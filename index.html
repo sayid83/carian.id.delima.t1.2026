@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cari ID Delima Murid Tahun 1 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:      #0b1f38;
+      --navy-mid:  #132d4f;
+      --blue:      #1e4175;
+      --gold:      #c8992f;
+      --gold-lt:   #f2cb6a;
+      --gold-pale: #fff8e7;
+      --white:     #ffffff;
+      --text-dark: #0b1f38;
+      --text-mid:  #4a6080;
+      --text-lt:   #8fa3bc;
+      --card-bg:   rgba(255,255,255,0.95);
+      --shadow-lg: 0 12px 40px rgba(11,31,56,0.35);
+      --shadow-sm: 0 4px 16px rgba(11,31,56,0.15);
+      --radius:    18px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: #111; /* Ditukar kepada gelap neutral */
+      color: var(--text-dark);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .bg-image {
+      position: fixed; inset: 0;
+      background-image: url('https://drive.google.com/thumbnail?id=1iOt-nLRS76AEcHl1in5kV3cZfboN7aA5&sz=w1200');
+      background-size: cover; background-position: center;
+      opacity: 0.4; z-index: 0; pointer-events: none; /* Opacity ditetapkan kepada 40% */
+    }
+    .bg-gradient {
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.3); /* Tukar dari biru pekat kepada gelap lutsinar nipis */
+      z-index: 1; pointer-events: none;
+    }
+    .page { position: relative; z-index: 10; max-width: 440px; margin: 0 auto; padding: 0 18px 56px; }
+    header { text-align: center; padding: 44px 12px 32px; animation: fadeDown 0.6s ease both; }
+    .logo-ring {
+      width: 115px; height: 115px; border-radius: 50%; background: white;
+      margin: 0 auto 18px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 4px rgba(200,153,47,0.35), var(--shadow-sm);
+      border: 3px solid var(--gold); overflow: hidden; position: relative;
+    }
+    .logo-ring img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+    .logo-fallback { font-size: 38px; display: none; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+      color: var(--navy); font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 30px; margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(200,153,47,0.4);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 5.5vw, 26px);
+      color: white; line-height: 1.25; letter-spacing: -0.3px;
+    }
+    h1 span { color: var(--gold-lt); }
+    .header-divider {
+      width: 50px; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 16px auto 10px; border-radius: 2px;
+    }
+    .header-sub { color: rgba(255,255,255,0.52); font-size: 12px; font-weight: 300; letter-spacing: 0.3px; }
+    .status-bar { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 20px; animation: fadeIn 0.8s ease 0.2s both; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #44d97a; box-shadow: 0 0 6px #44d97a; animation: pulse-dot 2s infinite; }
+    
+    @keyframes pulse-dot { 
+      0%, 100% { opacity: 1; transform: scale(1); } 
+      50% { opacity: 0.6; transform: scale(0.8); } 
+    }
+    
+    .status-text { color: rgba(255,255,255,0.55); font-size: 11px; }
+    .status-count { color: var(--gold-lt); font-weight: 600; font-size: 11px; }
+    
+    .search-card {
+      background: var(--card-bg); border-radius: var(--radius);
+      padding: 24px 20px 22px; box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,0.6); margin-bottom: 18px;
+      animation: fadeUp 0.5s ease 0.1s both;
+    }
+    .field-label { font-size: 11px; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .input-wrap { position: relative; }
+    .search-input {
+      width: 100%; padding: 14px 50px 14px 18px; border-radius: 12px;
+      border: 2px solid #dde6f0; font-family: 'Poppins', sans-serif;
+      font-size: 14px; font-weight: 400; color: var(--text-dark);
+      background: #f6f9fd; transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none; -webkit-appearance: none;
+    }
+    .search-input::placeholder { color: var(--text-lt); }
+    .search-input:focus { border-color: var(--gold); background: white; box-shadow: 0 0 0 3px rgba(200,153,47,0.12); }
+    .input-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--gold); pointer-events: none; }
+    .suggestions {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: white; border-radius: 12px; box-shadow: 0 8px 28px rgba(11,31,56,0.18);
+      z-index: 200; max-height: 220px; overflow-y: auto; display: none; border: 1px solid #e8eef5;
+    }
+    .suggestions.open { display: block; animation: fadeUp 0.15s ease; }
+    .sug-item { padding: 12px 18px; font-size: 13px; color: var(--text-dark); cursor: pointer; border-bottom: 1px solid #f0f4f8; transition: background 0.15s; display: flex; align-items: center; gap: 10px; }
+    .sug-item:last-child { border-bottom: none; }
+    .sug-item:hover { background: var(--gold-pale); }
+    .sug-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--gold-lt); flex-shrink: 0; font-family: 'Playfair Display', serif; }
+    .sug-name { font-weight: 500; }
+    .search-btn {
+      width: 100%; margin-top: 16px; padding: 15px; border-radius: 12px; border: none;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      color: white; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600;
+      letter-spacing: 0.3px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      -webkit-appearance: none; box-shadow: 0 4px 16px rgba(11,31,56,0.3);
+    }
+    .search-btn:active { transform: scale(0.97); }
+    .search-btn:hover { box-shadow: 0 6px 20px rgba(11,31,56,0.4); }
+    .result-card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.6); margin-bottom: 18px; display: none; }
+    .result-card.show { display: block; animation: fadeUp 0.35s ease; }
+    .result-header { background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); padding: 20px 20px 18px; display: flex; align-items: center; gap: 14px; position: relative; overflow: hidden; }
+    .result-header::before { content: ''; position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(200,153,47,0.12); }
+    .result-avatar { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-lt)); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; color: var(--navy); flex-shrink: 0; font-family: 'Playfair Display', serif; box-shadow: 0 4px 12px rgba(200,153,47,0.4); }
+    .result-info { flex: 1; min-width: 0; }
+    .result-name { color: white; font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .result-tag { color: rgba(255,255,255,0.55); font-size: 11px; margin-top: 2px; }
+    .verified-badge { background: rgba(68,217,122,0.15); border: 1px solid rgba(68,217,122,0.4); border-radius: 20px; padding: 3px 10px; font-size: 10px; font-weight: 600; color: #44d97a; letter-spacing: 0.5px; white-space: nowrap; }
+    .result-body { padding: 20px; }
+    .info-block { margin-bottom: 16px; }
+    .info-block:last-child { margin-bottom: 0; }
+    .info-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-lt); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+    .info-val-box { background: #f4f8fc; border-radius: 12px; padding: 13px 16px; display: flex; align-items: center; gap: 10px; border: 1px solid #e8eef5; }
+    .info-val { font-size: 13.5px; font-weight: 500; color: var(--text-dark); flex: 1; word-break: break-all; line-height: 1.4; }
+    .copy-btn { background: var(--navy); color: white; border: none; border-radius: 8px; padding: 7px 13px; font-size: 11px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; flex-shrink: 0; transition: background 0.2s, transform 0.1s; letter-spacing: 0.3px; }
+    .copy-btn:active { transform: scale(0.95); background: var(--gold); color: var(--navy); }
+    .copy-btn.copied { background: #2ecc71; }
+    .not-found { background: var(--card-bg); border-radius: var(--radius); padding: 36px 24px; text-align: center; box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.6); display: none; margin-bottom: 18px; }
+    .not-found.show { display: block; animation: fadeUp 0.35s ease; }
+    .nf-icon { font-size: 48px; margin-bottom: 14px; }
+    .nf-title { font-size: 16px; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
+    .nf-sub { font-size: 12px; color: var(--text-lt); line-height: 1.6; }
+    .loading-wrap { text-align: center; padding: 24px; display: none; }
+    .loading-wrap.show { display: block; animation: fadeIn 0.2s ease; }
+    .spinner { width: 36px; height: 36px; border: 3px solid rgba(255,255,255,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 10px; }
+    .loading-text { color: rgba(255,255,255,0.6); font-size: 12px; }
+    .error-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,100,100,0.3); border-radius: var(--radius); padding: 16px 20px; text-align: center; margin-bottom: 18px; display: none; }
+    .error-card.show { display: block; animation: fadeUp 0.3s ease; }
+    .error-card p { color: rgba(255,200,200,0.9); font-size: 12.5px; line-height: 1.6; }
+    footer { text-align: center; color: rgba(255,255,255,0.25); font-size: 10px; margin-top: 20px; letter-spacing: 0.5px; line-height: 1.8; }
+    
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(200,153,47,0.4); border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div class="bg-image"></div>
+  <div class="bg-gradient"></div>
+  <div class="page">
+    <header>
+      <div class="logo-ring">
+        <img id="logoImg"
+             src="https://lh3.googleusercontent.com/d/1AK4sMXuz67g7G3ojr0RM0RJdxHS8Ms0p"
+             alt="Logo SK Subang Bestari 2"
+             onerror="this.style.display='none'; document.querySelector('.logo-fallback').style.display='flex';">
+        <span class="logo-fallback" style="display:none; align-items:center; justify-content:center; font-size:38px;">🏫</span>
+      </div>
+      <div class="pill">⭐ Sistem Delima KPM</div>
+      <h1>Cari <span>ID Delima</span><br>Murid Tahun 1 <span>2026</span></h1>
+      <div class="header-divider"></div>
+      <p class="header-sub">Masukkan nama murid untuk mendapatkan maklumat ID Delima</p>
+    </header>
+    
+    <div class="status-bar">
+      <div class="status-dot" id="statusDot" style="background:#f0a830; box-shadow:0 0 6px #f0a830;"></div>
+      <span class="status-text" id="statusText">Sedang memuatkan data...</span>
+      <span class="status-count" id="statusCount"></span>
+    </div>
+    
+    <div class="search-card">
+      <div class="field-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Nama Murid
+      </div>
+      <div class="input-wrap">
+        <input type="search" class="search-input" id="searchInput"
+          placeholder="Contoh: Ahmad bin Abdullah..."
+          autocomplete="off" autocorrect="off" spellcheck="false" inputmode="search">
+        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <div class="suggestions" id="suggestions"></div>
+      </div>
+      <button class="search-btn" id="searchBtn" onclick="doSearch()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        Cari Maklumat
+      </button>
+    </div>
+    
+    <div class="loading-wrap" id="searching">
+      <div class="spinner"></div>
+      <div class="loading-text">Mencari maklumat murid...</div>
+    </div>
+    
+    <div class="error-card" id="errorCard"><p id="errorMsg"></p></div>
+    
+    <div class="result-card" id="resultCard">
+      <div class="result-header">
+        <div class="result-avatar" id="rAvatar">A</div>
+        <div class="result-info">
+          <div class="result-name" id="rName">-</div>
+          <div class="result-tag">Murid Tahun 1 2026 • ID Delima</div>
+        </div>
+        <div class="verified-badge">✓ Dijumpai</div>
+      </div>
+      <div class="result-body">
+        <div class="info-block">
+          <div class="info-lbl">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            E-mel / ID Delima
+          </div>
+          <div class="info-val-box">
+            <span class="info-val" id="rEmail">-</span>
+            <button class="copy-btn" onclick="copyField('rEmail', this)">Salin</button>
+          </div>
+        </div>
+        <div class="info-block" id="pwBlock">
+          <div class="info-lbl">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Kata Laluan
+          </div>
+          <div class="info-val-box">
+            <span class="info-val" id="rPass">-</span>
+            <button class="copy-btn" onclick="copyField('rPass', this)">Salin</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="not-found" id="notFound">
+      <div class="nf-icon">🔍</div>
+      <div class="nf-title">Murid Tidak Dijumpai</div>
+      <div class="nf-sub">Nama "<strong id="nfName"></strong>" tidak terdapat dalam rekod.<br>Sila semak ejaan atau cuba nama lain.</div>
+    </div>
+    
+    <footer>
+      Sistem Carian ID Delima · Tahun 1 2026<br>
+      Data diambil daripada Google Sheets · KPM
+    </footer>
+  </div>
+
+  <script>
+    const SHEET_ID = '18kEr1d2HX9dneyGvTlH3BJrfEhTYFim3vyOdmYOnOTM';
+    const COL_NAME  = 'nama';
+    const COL_EMAIL = 'emel';
+    const COL_PASS  = 'kata laluan';
+    let allStudents = [];
+    
+    const $ = id => document.getElementById(id);
+    const inp = $('searchInput');
+    const sug = $('suggestions');
+
+    async function loadData() {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
+      try {
+        const res  = await fetch(url);
+        const text = await res.text();
+        const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?\s*$/)[1]);
+        if (!json.table || !json.table.rows || !json.table.cols) throw new Error('Tiada data');
+        
+        const cols = json.table.cols.map(c => (c.label || '').toLowerCase().trim());
+        const rows = json.table.rows;
+        
+        const iName  = findCol(cols, [COL_NAME,  'nama', 'name', 'nama murid', 'nama pelajar', 'nama penuh']);
+        const iEmail = findCol(cols, [COL_EMAIL, 'email', 'emel', 'id', 'id delima', 'user', 'username']);
+        const iPass  = findCol(cols, [COL_PASS,  'password', 'kata laluan', 'katalaluan', 'pw', 'pass']);
+        
+        allStudents = rows
+          .filter(r => r.c && r.c[iName] && r.c[iName].v)
+          .map(r => ({
+            nama: safeVal(r.c[iName]),
+            emel: iEmail >= 0 ? safeVal(r.c[iEmail]) : '',
+            pass: iPass  >= 0 ? safeVal(r.c[iPass])  : '',
+          }));
+          
+        setStatus('ready', allStudents.length);
+      } catch (e) {
+        console.error(e);
+        setStatus('error');
+        showError(`<strong>⚠️ Ralat memuatkan data</strong><br><br>Pastikan Google Sheet telah ditetapkan kepada <strong>"Sesiapa yang mempunyai pautan boleh lihat"</strong> dalam tetapan perkongsian.`);
+      }
+    }
+
+    function safeVal(cell) { 
+        if (!cell) return ''; 
+        return String(cell.v || '').trim(); 
+    }
+    
+    function findCol(cols, candidates) {
+      for (const c of candidates) { 
+          const i = cols.findIndex(col => col.includes(c)); 
+          if (i >= 0) return i; 
+      }
+      return -1;
+    }
+    
+    function setStatus(state, count) {
+      const dot = $('statusDot'), txt = $('statusText'), cnt = $('statusCount');
+      if (state === 'ready') { 
+          dot.style.background='#44d97a'; 
+          dot.style.boxShadow='0 0 6px #44d97a'; 
+          txt.textContent='Data sedia •'; 
+          cnt.textContent=`${count} rekod murid`; 
+      } else if (state === 'error') { 
+          dot.style.background='#e74c3c'; 
+          dot.style.boxShadow='0 0 6px #e74c3c'; 
+          txt.textContent='Ralat memuatkan data'; 
+          cnt.textContent=''; 
+      } else { 
+          dot.style.background='#f0a830'; 
+          dot.style.boxShadow='0 0 6px #f0a830'; 
+          txt.textContent='Sedang memuatkan data...'; 
+          cnt.textContent=''; 
+      }
+    }
+    
+    function doSearch() {
+      const q = inp.value.trim();
+      if (!q) { inp.focus(); return; }
+      
+      hideSuggestions(); 
+      showSearching(true); 
+      hideAll();
+      
+      setTimeout(() => {
+        showSearching(false);
+        const results = findStudents(q);
+        if (results.length === 1) {
+            showResult(results[0]);
+        } else if (results.length > 1) { 
+            const exact = results.find(r => r.nama.toLowerCase() === q.toLowerCase()); 
+            showResult(exact || results[0]); 
+        } else {
+            showNotFound(q);
+        }
+      }, 380);
+    }
+    
+    function findStudents(q) { 
+        const query = q.toLowerCase().trim(); 
+        return allStudents.filter(s => s.nama.toLowerCase().includes(query)); 
+    }
+    
+    inp.addEventListener('input', () => {
+      const q = inp.value.trim();
+      if (q.length < 2) { hideSuggestions(); return; }
+      
+      const matches = findStudents(q).slice(0, 6);
+      if (matches.length === 0) { hideSuggestions(); return; }
+      
+      renderSuggestions(matches);
+    });
+    
+    inp.addEventListener('keydown', e => { 
+        if (e.key === 'Enter') doSearch(); 
+    });
+    
+    document.addEventListener('click', e => { 
+        if (!e.target.closest('.input-wrap')) hideSuggestions(); 
+    });
+    
+    function renderSuggestions(list) {
+      sug.innerHTML = list.map(s => `
+        <div class="sug-item" onclick="selectStudent('${escHtml(s.nama)}')">
+            <div class="sug-avatar">${s.nama.charAt(0).toUpperCase()}</div>
+            <div><div class="sug-name">${highlight(s.nama, inp.value.trim())}</div></div>
+        </div>
+      `).join('');
+      sug.classList.add('open');
+    }
+    
+    function selectStudent(nama) { 
+        inp.value = nama; 
+        hideSuggestions(); 
+        doSearch(); 
+    }
+    
+    function hideSuggestions() { 
+        sug.classList.remove('open'); 
+        sug.innerHTML = ''; 
+    }
+    
+    function highlight(text, q) {
+      const idx = text.toLowerCase().indexOf(q.toLowerCase());
+      if (idx < 0) return escHtml(text);
+      return escHtml(text.slice(0, idx)) + 
+             `<strong style="color:var(--gold)">${escHtml(text.slice(idx, idx+q.length))}</strong>` + 
+             escHtml(text.slice(idx+q.length));
+    }
+    
+    function escHtml(t) { 
+        return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); 
+    }
+    
+    function showResult(s) {
+      $('rAvatar').textContent = s.nama.charAt(0).toUpperCase();
+      $('rName').textContent   = s.nama;
+      $('rEmail').textContent  = s.emel || '(tiada)';
+      $('rPass').textContent   = s.pass  || '(tiada)';
+      if (!s.pass) {
+          $('pwBlock').style.display = 'none'; 
+      } else {
+          $('pwBlock').style.display = '';
+      }
+      $('resultCard').classList.add('show');
+    }
+    
+    function showNotFound(q) { 
+        $('nfName').textContent = q; 
+        $('notFound').classList.add('show'); 
+    }
+    
+    function showSearching(v) { 
+        $('searching').classList.toggle('show', v); 
+    }
+    
+    function showError(msg) { 
+        $('errorMsg').innerHTML = msg; 
+        $('errorCard').classList.add('show'); 
+    }
+    
+    function hideAll() { 
+        $('resultCard').classList.remove('show'); 
+        $('notFound').classList.remove('show'); 
+        $('errorCard').classList.remove('show'); 
+    }
+    
+    function copyField(id, btn) {
+      const text = $(id).textContent;
+      if (!text || text === '(tiada)') return;
+      
+      // Fallback for document.execCommand if clipboard API is blocked in iframe
+      if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(() => {
+            const orig = btn.textContent; btn.textContent = '✓ Disalin!'; btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
+          }).catch(handleCopyFallback);
+      } else {
+          handleCopyFallback();
+      }
+
+      function handleCopyFallback() {
+          const ta = document.createElement('textarea'); 
+          ta.value = text; 
+          ta.style.position='fixed'; 
+          ta.style.opacity='0';
+          document.body.appendChild(ta); 
+          ta.select(); 
+          document.execCommand('copy'); 
+          document.body.removeChild(ta);
+          btn.textContent = '✓ Disalin!'; 
+          setTimeout(() => btn.textContent = 'Salin', 1800);
+      }
+    }
+    
+    loadData();
+  </script>
+</body>
+</html>

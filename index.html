@@ -266,9 +266,11 @@
 
   <script>
     const SHEET_ID = '18kEr1d2HX9dneyGvTlH3BJrfEhTYFim3vyOdmYOnOTM';
+    // Tajuk-tajuk lajur (kolom) yang sistem akan cari dalam baris 1
     const COL_NAME  = 'nama';
     const COL_EMAIL = 'emel';
     const COL_PASS  = 'kata laluan';
+    
     let allStudents = [];
     
     const $ = id => document.getElementById(id);
@@ -276,20 +278,37 @@
     const sug = $('suggestions');
 
     async function loadData() {
-      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
+      // &headers=1 memastikan sistem baca baris pertama sebagai tajuk (header)
+      // &sheet=Sheet1 dibuang supaya sistem sentiasa baca tab (helaian) yang pertama secara automatik
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1`;
+      
       try {
         const res  = await fetch(url);
         const text = await res.text();
         const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?\s*$/)[1]);
+        
+        // Periksa ralat sekiranya format atau akses tidak dibenarkan
+        if (json.errors && json.errors.length > 0) {
+            throw new Error(json.errors[0].detailed_message || 'Ralat Google Sheet');
+        }
+        
         if (!json.table || !json.table.rows || !json.table.cols) throw new Error('Tiada data');
         
         const cols = json.table.cols.map(c => (c.label || '').toLowerCase().trim());
         const rows = json.table.rows;
         
+        // Pengecaman Kolom automatik
         const iName  = findCol(cols, [COL_NAME,  'nama', 'name', 'nama murid', 'nama pelajar', 'nama penuh']);
-        const iEmail = findCol(cols, [COL_EMAIL, 'email', 'emel', 'id', 'id delima', 'user', 'username']);
-        const iPass  = findCol(cols, [COL_PASS,  'password', 'kata laluan', 'katalaluan', 'pw', 'pass']);
+        const iEmail = findCol(cols, [COL_EMAIL, 'email', 'emel', 'id', 'id delima', 'user', 'username', 'moe']);
+        const iPass  = findCol(cols, [COL_PASS,  'password', 'kata laluan', 'katalaluan', 'pw', 'pass', 'k.laluan']);
         
+        // Jika kolom Nama tidak dijumpai
+        if (iName === -1) {
+            setStatus('error');
+            showError(`<strong>⚠️ Format Google Sheet Tidak Sepadan</strong><br><br>Sistem tidak dapat mencari tajuk lajur untuk <strong>NAMA</strong>.<br>Pastikan baris pertama Sheet anda mempunyai perkataan "Nama".`);
+            return;
+        }
+
         allStudents = rows
           .filter(r => r.c && r.c[iName] && r.c[iName].v)
           .map(r => ({
@@ -298,11 +317,18 @@
             pass: iPass  >= 0 ? safeVal(r.c[iPass])  : '',
           }));
           
+        // Jika data dijumpai kosong
+        if (allStudents.length === 0) {
+            setStatus('error');
+            showError(`<strong>⚠️ Tiada Rekod Murid Dijumpai</strong><br><br>Sila pastikan senarai nama murid telah dimasukkan ke dalam baris Google Sheet.`);
+            return;
+        }
+
         setStatus('ready', allStudents.length);
       } catch (e) {
         console.error(e);
         setStatus('error');
-        showError(`<strong>⚠️ Ralat memuatkan data</strong><br><br>Pastikan Google Sheet telah ditetapkan kepada <strong>"Sesiapa yang mempunyai pautan boleh lihat"</strong> dalam tetapan perkongsian.`);
+        showError(`<strong>⚠️ Ralat memuatkan data</strong><br><br>1. Pastikan Google Sheet telah ditetapkan kepada <strong>"Anyone with the link"</strong> (Viewer).<br>2. ID Sheet anda betul.`);
       }
     }
 
@@ -324,7 +350,7 @@
       if (state === 'ready') { 
           dot.style.background='#44d97a'; 
           dot.style.boxShadow='0 0 6px #44d97a'; 
-          txt.textContent='Data sedia •'; 
+          txt.textContent='Data sedia • '; 
           cnt.textContent=`${count} rekod murid`; 
       } else if (state === 'error') { 
           dot.style.background='#e74c3c'; 
@@ -454,7 +480,6 @@
       const text = $(id).textContent;
       if (!text || text === '(tiada)') return;
       
-      // Fallback for document.execCommand if clipboard API is blocked in iframe
       if (navigator.clipboard && window.isSecureContext) {
           navigator.clipboard.writeText(text).then(() => {
             const orig = btn.textContent; btn.textContent = '✓ Disalin!'; btn.classList.add('copied');
